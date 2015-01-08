@@ -52,3 +52,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+
+# Ignore the database
+db.sqlite3
