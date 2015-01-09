@@ -11,6 +11,6 @@ class Transaction(models.Model):
     account = models.ForeignKey(Account)
     number = models.IntegerField()
     check_number = models.IntegerField()
-    date = models.DateTimeField()
+    date = models.DateField()
     amount = models.DecimalField(decimal_places=4, max_digits=20)
     memo = models.CharField(max_length=200)

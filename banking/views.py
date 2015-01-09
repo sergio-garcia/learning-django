@@ -16,6 +16,14 @@ def import_ofx(request):
         account = Account.objects.all()[0]
 
         for ofx_transaction in ofx.account.statement.transactions:
+            query = Transaction.objects.filter(
+                    date=ofx_transaction.date.date(),
+                    number=int(ofx_transaction.id),
+                    memo=ofx_transaction.memo)
+
+            if query:
+                continue
+
             transaction = Transaction()
             transaction.account = account
             transaction.number = int(ofx_transaction.id)
