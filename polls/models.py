@@ -13,7 +13,7 @@ class Question(models.Model):
     pub_date = models.DateTimeField('date published')
     objects = models.Manager()
     on_site = CurrentSiteManager()
-	
+
     def __str__(self):
         return self.question_text
 
@@ -22,16 +22,16 @@ class Question(models.Model):
     was_published_recently.admin_order_field = 'pub_date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Published recently?'
-	
+
 class Choice(models.Model):
     site = models.ForeignKey(Site)
-    question = models.ForeignKey(Question)
+    question = models.ForeignKey(Question, related_name="choices")
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
     objects = models.Manager()
     on_site = CurrentSiteManager()
-	
+
     def __str__(self):
         return self.choice_text
 
-		
+

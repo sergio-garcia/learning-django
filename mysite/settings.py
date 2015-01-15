@@ -38,12 +38,15 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 	'django.contrib.sites',
 
+    'tastypie',
+
     'banking',
     'notafiscal',
     'polls',
 )
 
 MIDDLEWARE_CLASSES = (
+    'polls.middleware.GlobalRequestMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
 	'django.contrib.sites.middleware.CurrentSiteMiddleware',
@@ -52,7 +55,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	'polls.middleware.GlobalRequestMiddleware'
 )
 
 ROOT_URLCONF = 'mysite.urls'

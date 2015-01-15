@@ -8,3 +8,47 @@
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+
+{% verbatim %}
+<div id="list" ng-app="pollsApp" style="display: none">
+  <div ng-controller="PollsAppController">
+    <ul>
+      <li ng-repeat="question in questions.objects">
+        <span>{{question.question_text}}</span>
+        <input type="submit" ng-click="showChoices(question)" value="Show Choices" />
+      </li>
+    </ul>
+    <ul>
+      <li ng-repeat="choice in choices.objects">
+        <span>{{choice.choice_text}}</span>
+      </li>
+    </ul>
+  </div>
+</div>
+{% endverbatim %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
+<script>
+var pollsApp = angular.module('pollsApp', []);
+
+pollsApp.controller('PollsAppController', function ($scope, $http) {
+  $http.get('/api/v1/question.json').success(function(data) {
+    console.log(JSON.stringify(data));
+    $scope.questions = data;
+    $('#list').show();
+  });
+
+  $scope.showChoices = function(question) {
+    $http.get('/api/v1/question/' + question.id + '/choices.json')
+      .success(function(data) {
+        $scope.choices = data;
+      })
+      .error(function(data, status, headers, config) {
+        console.log(data.error_message);
+        console.log(data.traceback);
+        console.log(JSON.stringify(data));
+      });
+  };
+});
+</script>
